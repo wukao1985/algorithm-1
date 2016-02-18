@@ -8,7 +8,7 @@ def permutePIEHelper(nums, visited, ret, curr, index):
     # not from range(index, len(nums))
     for i in range(0, len(nums)):
         if visited[i] == 1 or \
-           (i > 0 and visited[i - 1]  and nums[i] == nums[i - 1]):
+           (i > 0 and visited[i - 1] and nums[i] == nums[i - 1]):
             continue
         else:
             visited[i] = 1
@@ -22,11 +22,14 @@ def permutePIEHelper(nums, visited, ret, curr, index):
 def permutePIE(nums):
     """
     PIE: P95
+    If no duplicated, make sure you SORTED the list first!
     """
+    if nums is None:
+        return []
     ret = []
     curr = []
     visited = [0] * len(nums)
-    permutePIEHelper(nums, visited, ret, curr, 0)
+    permutePIEHelper(sorted(nums), visited, ret, curr, 0)
     return ret
 
 def permuteKao(nums):
@@ -65,6 +68,6 @@ def permute(nums):
     
     return ret
 
-test = [1, 2, 2]
+test = [3,3,0,3]
 
 print permutePIE(test)
