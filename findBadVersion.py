@@ -1,8 +1,7 @@
 #!/usr/bin/python
-# This implementation works on local, but lintcode
-# returns error for n=10 case, which I have the 
-# unit test showing is working.
-# Let's see what might going wrong?
+# Original implementation used too many
+# isBadVersions() function call
+# simplify the solution here:
 
 A = [False] * 9 + [True]
 print (A)
@@ -11,33 +10,21 @@ def isBadVersion(index):
 
 def findFirstBadVersion(n):
     # write your code here
-    index = 1
-    
-    while index < n:
-        if isBadVersion(index) == False:
-            index = 2*index + 1
-        else:
-            break
+    start = 0
+    end = n        
+    if n == 1 and isBadVersion(1) == True:
+        return 1
         
-    # if index is > n
-    # we should do binary search between index/2 to n
-    # otherwise we should do binary search between 0 to index
-    if index > n:
-        start = index/2
-        end = n
-    else:
-        start = 1
-        end = index
-
-    while end > start:
-        mid = (end+start)/2
-        if isBadVersion(mid) == False and isBadVersion(mid+1) == True:
-            return mid+1
+    while end >= start:
+        mid = (start + end)/2
+        if isBadVersion(mid) == True:
+            end = mid - 1 
         else:
-            if isBadVersion(mid) == False:
-                start = mid+1
-            else:
-                end = mid-1
-    return end
+            start = mid + 1
 
+    if isBadVersion(start) == True:
+        return start
+    else:
+        return end
+    
 print 'the bad version is', findFirstBadVersion(10)
